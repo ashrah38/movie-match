@@ -9,5 +9,7 @@ require("./models/dbConnection.js");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/", require("./controllers/roomControllers/roomControllers.js"))
+
 // initializing port
 app.listen(port, () => console.log("Port initialized"));

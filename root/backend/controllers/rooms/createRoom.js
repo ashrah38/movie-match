@@ -1,7 +1,8 @@
 // Importing express module
 const express=require("express")
 const router=express.Router()
-  
+const DbConnection = require('../../models/DbConnection');
+
 // Handling request using router
 router.get("/",(req,res,next)=>{
   //first step, check if all parameters are there
@@ -13,12 +14,23 @@ router.get("/",(req,res,next)=>{
     genre = req.body.genre
   }
   console.log("Values are", adminID, genre)
+  
+  // let userList = DbConnection.getAllUsers();
+  // DbConnection.getAllUsers().then(res => {
+  //   console.log(res)
+  // })
+
+
+  const result = Promise.resolve(DbConnection.getAllUsers());
+  result.then(value =>{
+    console.log(value)
+  })
 
   //get list of codes from db
   //provide list to codeGen()
   //generate random room code 4 character length
   let code = codeGen()
-  
+
   //we need two tables at least
   //a room code table
   //related to that room code, another table that contains the users part of that room OR
