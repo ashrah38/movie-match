@@ -15,19 +15,3 @@ mongoose
   .catch((err) => {
     console.error(`Error connecting to the database. n${err}`);
   });
-
-function getAllUsers(){
-  // mongoose.connect(url, connectionParams);
-  // const connection = mongoose.connection;
-  // connection.once('open', () => {
-  //   console.log("MongoDB database connection established successfully");
-  // })
-
-  const users = require('./User');
-
-  users.find().then(users => {
-    return users;
-  });
-}
-
-exports.getAllUsers = getAllUsers;
