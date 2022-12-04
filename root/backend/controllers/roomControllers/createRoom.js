@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const Room = require('../../models/Room');
-const User = require('../../models/User')
+const User = require('../../models/User');
 
 const createRoom = (req, res) => {
   console.log("Creating Room")
@@ -26,7 +26,13 @@ const createRoom = (req, res) => {
   Room.create(newRoom, (err, room) => { 
     if(err){
       console.log("Error creating room", err)
-      res.sendStatus(500);
+      //11000 is for error for duplicate room code
+      //rerun createRoom function if duplicate room code detected
+      if(err.code === 11000){
+        createRoom(req, res);
+      }else{
+        res.sendStatus(500);
+      }
     } else {
       //adding room to user document
       User.findById(memberId, (err, user) => {
