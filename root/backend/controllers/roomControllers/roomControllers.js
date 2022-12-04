@@ -3,7 +3,7 @@ const router = express.Router();
 const createRoom = require("./createRoom")
 const joinRoom = require("./joinRoom")
 
-router.get("/createRoom", (req, res) => {
+router.post("/createRoom", (req, res) => {
   createRoom(req, res);
 })
 
