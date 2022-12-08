@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const authenticateToken = async (req, res, next) => {
   // obtains the token from the browser cookie
-  const token = req.cookies.access_token;
+  const token = req.cookies.accessToken;
   // if the token does not exist (user not logged in) sends a 401 code
   if (!token) {
     return res.sendStatus(401);

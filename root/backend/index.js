@@ -15,6 +15,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/", require("./controllers/roomControllers/roomControllers.js"));
+app.use("/", require("./controllers/authControllers/authControllers.js"));
 
 // initializing port
 app.listen(port, () => console.log("Port initialized"));
