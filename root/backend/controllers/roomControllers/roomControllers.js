@@ -1,14 +1,15 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
-const createRoom = require("./createRoom")
-const joinRoom = require("./joinRoom")
+const createRoom = require("./createRoom");
+const joinRoom = require("./joinRoom");
+const authenticateToken = require("../../utilities/authenticateToken");
 
-router.post("/createRoom", (req, res) => {
+router.post("/createRoom", authenticateToken, (req, res) => {
   createRoom(req, res);
-})
+});
 
-router.get("/joinRoom", (req, res) => {
+router.get("/joinRoom", authenticateToken, (req, res) => {
   joinRoom(req, res);
-})
+});
 
 module.exports = router;
