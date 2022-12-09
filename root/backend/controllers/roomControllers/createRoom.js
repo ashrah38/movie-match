@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const Room = require('../../models/Room');
 const User = require('../../models/User');
 
+//creates room and returns room code
 const createRoom = (req, res) => {
   console.log("Creating Room")
 
