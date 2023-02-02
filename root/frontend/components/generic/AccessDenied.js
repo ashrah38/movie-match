@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import styles from '../../styles.js';
 
 const AccessDenied = () => {
     return (
@@ -9,11 +10,6 @@ const AccessDenied = () => {
             </View>
         </View>
     );
-};
-
-const styles = {
-    title: {},
-    name: {}
 };
 
 export default AccessDenied;
