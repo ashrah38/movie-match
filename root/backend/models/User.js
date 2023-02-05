@@ -7,6 +7,7 @@ const userSchema = new Schema({
   password: {type: String},
   likedMovies: {type: Array},
   swipedMovies: {type: Array},
+  seen: {type: Array},
   matches: {type: Array},
   myRooms: {type: Array},
   createdAt: {type: Date},
