@@ -1,13 +1,20 @@
-import { View, SafeAreaView } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LandingPage from "./components/landing-page/LandingPage";
 import styles from "./styles";
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <SafeAreaView style={styles.primaryContainer}>
-      <View style={styles.secondaryContainer}>
-        <LandingPage />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={LandingPage}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

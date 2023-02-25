@@ -14,21 +14,12 @@ const borderRadiusButton = "10";
 
 const styles = StyleSheet.create({
   primaryContainer: {
-    flex: 1,
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: mainBackgroundColor,
-    fontFamily: primaryFont,
-    height: "100%",
-    width: "100%",
-    overflow: "hidden",
-  },
-  secondaryContainer: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
     marginHorizontal: "auto",
+    position: "relative",
     width: "100%",
     maxWidth: 600,
     height: "100%",
@@ -36,6 +27,7 @@ const styles = StyleSheet.create({
     minHeight: 600,
     paddingTop: 20,
   },
+
   formContainer: {
     flex: 1,
     flexDirection: "column",
@@ -55,7 +47,7 @@ const styles = StyleSheet.create({
   banner: {
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 100,
+    paddingVertical: 50,
   },
   title: {
     fontSize: 54,
@@ -69,10 +61,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 14,
     marginVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0.1, height: 0.1 },
-    shadowOpacity: 1,
-    shadowRadius: 1.5,
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 15,
@@ -89,6 +77,11 @@ const styles = StyleSheet.create({
   },
   largeBtn: {
     width: "100%",
+  },
+  returnBtn: {
+    backgroundColor: mainBackgroundColor,
+    position: "relative",
+    paddingLeft: 300,
   },
 });
 

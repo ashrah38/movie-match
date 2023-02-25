@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { Input, ErrorAlert } from "../generic/FormComponents";
 import { verifyInputFormat } from "../../helpers.js/verifyInputFormat";
 import ButtonContainer from "../generic/ButtonContainer";
+import Banner from "../generic/Banner";
 import { Button } from "@react-native-material/core";
 import styles from "../../styles";
 
-const LoginForm = () => {
+const LoginForm = ({ navigation }) => {
   // state used to update the input fields in real time.
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
@@ -14,7 +15,6 @@ const LoginForm = () => {
   const [errorMsg, setErrorMsg] = useState("");
   // used to show or hide error messages.
   const [errorMsgClass, setErrorMsgClass] = useState("error-alert hide");
-  //let navigate = useNavigate();
 
   // triggered on form submission - the function verifies the input format, and returns an error if the format is invalid.
   const onSubmitHandler = (email, password) => {
@@ -40,7 +40,7 @@ const LoginForm = () => {
     };
     // only when the format is verified does the POST request gets triggered.
     if (formatVerified) {
-      fetch("http://localhost:4000/login", requestOptions)
+      fetch("http://192.168.0.16:4000/login", requestOptions)
         .then((response) => {
           // 500 -> server not responding.
           if (response.status === 500) {
@@ -64,7 +64,7 @@ const LoginForm = () => {
         // data is only returned if login was successful - on successful login, navigate the user to /rooms.
         .then((data) => {
           if (data) {
-            //navigate("/rooms", { replace: true });
+            navigation.navigate("Rooms");
           }
         })
         .catch((error) => {
@@ -74,30 +74,36 @@ const LoginForm = () => {
     }
   };
   return (
-    <View style={styles.loginForm}>
-      <ErrorAlert className={errorMsgClass} errorMsg={errorMsg} />
-      <Input
-        name="Email"
-        type="Email"
-        value={email}
-        secureTextEntry={false}
-        onChangeText={onChangeEmail}
-      />
-      <Input
-        name="Password"
-        type="Password"
-        value={password}
-        secureTextEntry={true}
-        onChangeText={onChangePassword}
-      />
-      <ButtonContainer style={styles.btnContainer}>
-        <Button
-          title="Login"
-          onPress={() => onSubmitHandler(email, password)}
+    <SafeAreaView style={styles.primaryContainer}>
+      <Banner />
+      <View style={styles.loginForm}>
+        <ErrorAlert className={errorMsgClass} errorMsg={errorMsg} />
+        <Input
+          name="Email"
+          type="Email"
+          value={email}
+          secureTextEntry={false}
+          onChangeText={onChangeEmail}
         />
-        <Button title="Create an Account" />
-      </ButtonContainer>
-    </View>
+        <Input
+          name="Password"
+          type="Password"
+          value={password}
+          secureTextEntry={true}
+          onChangeText={onChangePassword}
+        />
+        <ButtonContainer style={styles.btnContainer}>
+          <Button
+            title="Login"
+            onPress={() => onSubmitHandler(email, password)}
+          />
+          <Button
+            title="Create an Account"
+            onPress={() => navigation.navigate("NewAccount")}
+          />
+        </ButtonContainer>
+      </View>
+    </SafeAreaView>
   );
 };
 
