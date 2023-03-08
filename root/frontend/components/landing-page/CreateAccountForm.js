@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Input, ErrorAlert } from "../generic/FormComponents";
-import { verifyInputFormat } from "../../helpers.js/verifyInputFormat";
+import { verifyInputFormat } from "../../helpers/verifyInputFormat";
 import ButtonContainer from "../generic/ButtonContainer";
 import Banner from "../generic/Banner";
 import styles from "../../styles";
@@ -86,30 +86,11 @@ const NewAccountForm = ({ navigation }) => {
       ></Icon.Button>
       <View style={styles.loginForm}>
         <ErrorAlert className={errorMsgClass} errorMsg={errorMsg} />
-        <Input
-          name="Email"
-          value={email}
-          secureTextEntry={false}
-          onChangeText={onChangeEmail}
-        />
-        <Input
-          name="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={onChangePassword}
-        />
-        <Input
-          name="Verify Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={onChangeVerifyPassword}
-        />
+        <Input name="Email" value={email} secureTextEntry={false} onChangeText={onChangeEmail} />
+        <Input name="Password" value={password} secureTextEntry={true} onChangeText={onChangePassword} />
+        <Input name="Verify Password" value={password} secureTextEntry={true} onChangeText={onChangeVerifyPassword} />
         <ButtonContainer style={styles.btnContainer}>
-          <Button
-            title="Create an Account"
-            onPress={() => onSubmitHandler(email, password)}
-            style={styles.largeBtn}
-          />
+          <Button title="Create an Account" onPress={() => onSubmitHandler(email, password)} style={styles.largeBtn} />
         </ButtonContainer>
       </View>
     </SafeAreaView>
