@@ -74,6 +74,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     padding: 10,
   },
+  StartDisplayContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "top",
+    alignItems: "center",
+    position: "relative",
+  },
   banner: {
     alignItems: "center",
     justifyContent: "center",
@@ -112,6 +119,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  btnContainerMode: {
+    width: 250,
+    maxHeight: 100,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   largeBtn: {
     width: "100%",
   },
@@ -127,6 +142,7 @@ const styles = StyleSheet.create({
   categoryBtn: {
     margin: 2,
   },
+  startBtn: {},
   categorySubmitBtn: {
     margin: 5,
     marginTop: 30,
