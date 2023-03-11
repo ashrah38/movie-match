@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Input, ErrorAlert } from "../generic/FormComponents";
-import { verifyInputFormat } from "../../helpers.js/verifyInputFormat";
+import { verifyInputFormat } from "../../helpers/verifyInputFormat";
 import ButtonContainer from "../generic/ButtonContainer";
 import Banner from "../generic/Banner";
 import { Button } from "@react-native-material/core";
@@ -78,29 +78,11 @@ const LoginForm = ({ navigation }) => {
       <Banner />
       <View style={styles.loginForm}>
         <ErrorAlert className={errorMsgClass} errorMsg={errorMsg} />
-        <Input
-          name="Email"
-          type="Email"
-          value={email}
-          secureTextEntry={false}
-          onChangeText={onChangeEmail}
-        />
-        <Input
-          name="Password"
-          type="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={onChangePassword}
-        />
+        <Input name="Email" type="Email" value={email} secureTextEntry={false} onChangeText={onChangeEmail} />
+        <Input name="Password" type="Password" value={password} secureTextEntry={true} onChangeText={onChangePassword} />
         <ButtonContainer style={styles.btnContainer}>
-          <Button
-            title="Login"
-            onPress={() => onSubmitHandler(email, password)}
-          />
-          <Button
-            title="Create an Account"
-            onPress={() => navigation.navigate("NewAccount")}
-          />
+          <Button title="Login" onPress={() => onSubmitHandler(email, password)} />
+          <Button title="Create an Account" onPress={() => navigation.navigate("NewAccount")} />
         </ButtonContainer>
       </View>
     </SafeAreaView>
