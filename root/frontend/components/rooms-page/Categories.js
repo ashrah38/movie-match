@@ -6,10 +6,12 @@ import styles from "../../styles";
 import { Input, ErrorAlert } from "../generic/FormComponents";
 import ButtonContainer from "../generic/ButtonContainer";
 
-const Categories = ({}) => {
+const Categories = ({ widgetStyles, chosenCategories, hideCategories }) => {
   const [buttonState, onChangeButtonState] = useState(categoriesArray);
   const [categoryList, onChangeCategoryList] = useState([]);
 
+  // triggers when the category buttons are pressed.
+  // updates the category list
   const onPressHandler = (id) => {
     const newButtonState = buttonState.map((category) => {
       if (category.id == id) {
@@ -30,14 +32,22 @@ const Categories = ({}) => {
       }
       return category;
     });
-    console.log(categoryList);
     onChangeButtonState(newButtonState);
   };
+
+  // triggers when the submit button is pressed
+  const onSubmitHandler = () => {
+    // pass the chosen categories to the parent component
+    chosenCategories(categoryList);
+    // hide the category component and show the main display
+    hideCategories();
+  };
+
   return (
     <View>
-      <View style={styles.categoryContainer}>
-        <Text>Categories</Text>
-        <Text>Choose upto 3 genres - change this at any time! </Text>
+      <View style={widgetStyles}>
+        <Text style={{ paddingBottom: 5, fontWeight: "bold" }}>Categories</Text>
+        <Text style={{ paddingBottom: 15 }}>Choose upto 3 genres - change this at any time! </Text>
         {buttonState.map((category) => (
           <Button
             style={styles.categoryBtn}
@@ -50,7 +60,7 @@ const Categories = ({}) => {
           />
         ))}
         <Button title="Cancel" style={styles.categorySubmitBtn} />
-        <Button title="Submit" style={styles.categorySubmitBtn} />
+        <Button title="Submit" style={styles.categorySubmitBtn} onPress={() => onSubmitHandler()} />
       </View>
     </View>
   );
