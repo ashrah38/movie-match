@@ -3,8 +3,6 @@ import { View, Text } from "react-native";
 import { categoriesArray } from "./CategoriesArray";
 import { Button } from "@react-native-material/core";
 import styles from "../../styles";
-import { Input, ErrorAlert } from "../generic/FormComponents";
-import ButtonContainer from "../generic/ButtonContainer";
 
 const Categories = ({ widgetStyles, chosenCategories, hideCategories }) => {
   const [buttonState, onChangeButtonState] = useState(categoriesArray);

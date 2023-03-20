@@ -204,6 +204,18 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderWidth: 1,
   },
+  countdownTimerContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: "100%",
+    maxHeight: "90%",
+  },
+  countdownTimer: {
+    fontSize: 400,
+    fontWeight: "bold",
+  },
 });
 
 export default styles;

@@ -12,6 +12,7 @@ const LandingPage = () => {
   const [hasUsername, setHasUsername] = useState(false);
   const [roomName, setRoomName] = useState();
   const [roomCode, setRoomCode] = useState();
+  const [chosenCategories, setChosenCategories] = useState();
 
   const setRoomValue = (name) => {
     setRoomName(name);
@@ -21,8 +22,23 @@ const LandingPage = () => {
     setRoomCode(code);
   };
 
+  const setChosenCategoriesValue = (chosenCategories) => {
+    setChosenCategories(chosenCategories);
+  };
+
   return (
-    <LandingPageContext.Provider value={{ hasUsername, setHasUsername, roomName, setRoomValue, roomCode, setCodeValue }}>
+    <LandingPageContext.Provider
+      value={{
+        hasUsername,
+        setHasUsername,
+        roomName,
+        setRoomValue,
+        roomCode,
+        setCodeValue,
+        chosenCategories,
+        setChosenCategoriesValue,
+      }}
+    >
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginForm} options={{ headerShown: false }} />
         <Stack.Screen name="NewAccount" component={NewAccountForm} options={{ headerShown: false }} />

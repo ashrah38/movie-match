@@ -1,23 +1,22 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import { Button } from "@react-native-material/core";
 import ButtonContainer from "../generic/ButtonContainer";
 import styles from "../../styles";
 
-const RoomCode = ({ widgetStyles, onCancel }) => {
-  // state used to update the username
-  const [roomName, onChangeRoomName] = useState("");
-  // state used to control the styles on the widgets
-  const [widgetStyle, onChangeWidgetStyle] = useState([styles.chooseUsernameWidget]);
-
-  const onSubmitHandler = () => {};
+const RoomCode = ({ widgetStyles, codeValue, startButtonHandler }) => {
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(codeValue);
+    Alert.alert("Copied to clipboard");
+  };
 
   return (
     <View style={widgetStyles}>
       <Text style={styles.widgetHeading}>Room Code</Text>
-      <Text style={styles.roomCodeText}>891JF</Text>
+      <Text style={styles.roomCodeText}>{codeValue}</Text>
       <ButtonContainer style={styles.btnContainerWidget}>
-        <Button title="Start!" onPress={() => onCancelHandler()} />
+        <Button title="Start!" onPress={() => startButtonHandler()} />
         <Button title="Clipboard" onPress={() => copyToClipboard()} />
       </ButtonContainer>
     </View>

@@ -4,7 +4,6 @@ import { SafeAreaView, View, Text } from "react-native";
 import Banner from "../generic/Banner";
 import Categories from "./Categories";
 import StartDisplay from "./StartDisplay";
-import CreateRoom from "./CreateRoom";
 import styles from "../../styles";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
 import IP_ADDRESS from "../../global";
@@ -46,6 +45,7 @@ const StartPage = ({ navigation }) => {
       .then((data) => {
         // successful post request, do whatever with the data here.
         context.setCodeValue(data);
+        context.setChosenCategoriesValue(categories);
         navigation.navigate("CountdownPage");
       })
       .catch((error) => {
@@ -57,7 +57,7 @@ const StartPage = ({ navigation }) => {
     <SafeAreaView style={styles.primaryContainer}>
       <Banner />
       <Categories widgetStyles={categoriesStyles} chosenCategories={setCategories} hideCategories={hideCategories} />
-      <StartDisplay chooseMode={chooseMode} startButtonHandler={startButtonHandler} />
+      <StartDisplay chooseMode={chooseMode} startButtonHandler={() => startButtonHandler(roomName, categories, mode)} />
     </SafeAreaView>
   );
 };
