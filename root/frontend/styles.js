@@ -81,6 +81,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  countdownContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "top",
+    alignItems: "center",
+    position: "relative",
+  },
   banner: {
     alignItems: "center",
     justifyContent: "center",
@@ -103,7 +110,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   errorAlert: {},
-
   btnContainer: {
     maxHeight: 100,
     width: 300,
@@ -185,6 +191,30 @@ const styles = StyleSheet.create({
   },
   hideWidget: {
     display: "none",
+  },
+  roomCodeText: {
+    fontSize: 45,
+    color: "red",
+    minWidth: "80%",
+    textAlign: "center",
+    shadowColor: "#ccc",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  countdownTimerContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: "100%",
+    maxHeight: "90%",
+  },
+  countdownTimer: {
+    fontSize: 400,
+    fontWeight: "bold",
   },
 });
 

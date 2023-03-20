@@ -7,6 +7,7 @@ import Banner from "../generic/Banner";
 import styles from "../../styles";
 import { Button } from "@react-native-material/core";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { IP_ADDRESS } from "../../global.js";
 
 const NewAccountForm = ({ navigation }) => {
   // state used to update the input fields in real time.
@@ -50,7 +51,7 @@ const NewAccountForm = ({ navigation }) => {
       }),
     };
     if (formatVerified) {
-      fetch("http://192.168.0.16:4000/create-new", requestOptions)
+      fetch(`http://${IP_ADDRESS}:4000/create-new`, requestOptions)
         .then((response) => {
           if (response.status === 500) {
             setErrorMsg("Something went wrong :/");
@@ -64,10 +65,10 @@ const NewAccountForm = ({ navigation }) => {
           }
           return response.json();
         })
-        .then((data) => {
+        .then(() => {
           navigate("/rooms", { replace: true });
         })
-        .catch((error) => {
+        .catch(() => {
           setErrorMsg("Something went wrong :/");
           setErrorMsgClass("error-alert");
           return;
@@ -88,7 +89,7 @@ const NewAccountForm = ({ navigation }) => {
         <ErrorAlert className={errorMsgClass} errorMsg={errorMsg} />
         <Input name="Email" value={email} secureTextEntry={false} onChangeText={onChangeEmail} />
         <Input name="Password" value={password} secureTextEntry={true} onChangeText={onChangePassword} />
-        <Input name="Verify Password" value={password} secureTextEntry={true} onChangeText={onChangeVerifyPassword} />
+        <Input name="Verify Password" value={verifyPassword} secureTextEntry={true} onChangeText={onChangeVerifyPassword} />
         <ButtonContainer style={styles.btnContainer}>
           <Button title="Create an Account" onPress={() => onSubmitHandler(email, password)} style={styles.largeBtn} />
         </ButtonContainer>

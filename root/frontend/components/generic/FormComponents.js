@@ -1,5 +1,6 @@
 import { TextInput, View, Text } from "react-native";
 import styles from "../../styles";
+
 const Input = ({ name, value, onChangeText, secureTextEntry }) => {
   return (
     <TextInput

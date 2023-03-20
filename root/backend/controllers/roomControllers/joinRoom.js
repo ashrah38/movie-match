@@ -1,9 +1,9 @@
-const Room = require('../../models/Room');
-const User = require('../../models/User');
+const Room = require("../../models/Room");
+const User = require("../../models/User");
 
 //verifies room exists and adds user to the room
 const joinRoom = (req, res) => {
-  console.log("Join Room")
+  console.log("Join Room");
 
   const { roomCode } = req.body;
   let roomName = "";
@@ -30,11 +30,11 @@ const joinRoom = (req, res) => {
             });
             user.save();
           }
-          res.sendStatus(200);
+          res.status(200).send(JSON.stringify(room));
         }
       });
     }
   });
-}
+};
 
 module.exports = joinRoom;

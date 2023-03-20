@@ -9,7 +9,7 @@ import { Input, ErrorAlert } from "../generic/FormComponents";
 // the room name is held by the RoomsPage, and this function is passed the OnChangeRoomName function
 // upon submission, the room name is held passed back to the RoomsPage
 // the user is directed to the choose categories widget next
-const CreateRoom = ({ widgetStyles, onCancel }) => {
+const CreateRoom = ({ widgetStyles, onCancel, navigation, setRoomName }) => {
   // state used to update the username
   const [roomName, onChangeRoomName] = useState("");
   // state used to update error messages if any.
@@ -17,7 +17,6 @@ const CreateRoom = ({ widgetStyles, onCancel }) => {
   // state used to show or hide error messages.
   const [errorMsgClass, setErrorMsgClass] = useState("error-alert hide");
   // state used to control the styles on the widgets
-  const [widgetStyle, onChangeWidgetStyle] = useState([styles.roomWidgets]);
 
   const onCancelHandler = () => {
     onCancel();
@@ -32,10 +31,10 @@ const CreateRoom = ({ widgetStyles, onCancel }) => {
     } else {
       formatVerified = true;
     }
-
     // only when the format is verified does the following trigger
-
     if (formatVerified) {
+      setRoomName(roomName);
+      navigation.navigate("StartPage");
     }
   };
 

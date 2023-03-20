@@ -7,15 +7,15 @@ import { Input, ErrorAlert } from "../generic/FormComponents";
 import ButtonContainer from "../generic/ButtonContainer";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const StartDisplay = ({}) => {
+const StartDisplay = ({ chooseMode, startButtonHandler }) => {
   const [mode, onChangeMode] = useState();
-  const [variantRF, onChangeVariantRF] = useState("outlined");
+  const [variantRF, onChangeVariantRF] = useState("contained");
   const [variantLB, onChangeVariantLB] = useState("outlined");
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const onPressHandlerMode = (chosenMode) => {
     //assign chosen mode to mode
-    onChangeMode(chosenMode);
+    chooseMode(chosenMode);
     //turn on the correct button
     if (chosenMode == "rapidfire") {
       onChangeVariantRF("contained");
@@ -74,7 +74,9 @@ const StartDisplay = ({}) => {
             backgroundColor="#f6f6f6"
             borderRadius={100}
             style={styles.startBtn}
-            onPress={() => {}}
+            onPress={() => {
+              startButtonHandler();
+            }}
           ></Icon.Button>
         </Animated.View>
       </View>
