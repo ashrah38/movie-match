@@ -12,7 +12,7 @@ const createRoom = (req, res) => {
     memberId = req.user._id;
   }
   //new room code
-  const roomCode = crypto.randomBytes(3).toString("hex");
+  let roomCode = crypto.randomBytes(3).toString("hex");
   roomCode = roomCode.toUpperCase();
   //new room object
   const newRoom = new Room({
