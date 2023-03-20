@@ -18,10 +18,11 @@ const loginUser = (req, res) => {
         if (!result) return res.sendStatus(502);
         else {
           // if credentials verified, create a JWT
-          const accessToken = jwt.sign(user.toJSON(), process.env.JWT_ACCESS_SECRET);
+          const toSend = { _id: user.id, email: user.email, password: user.password };
+          const accessToken = jwt.sign(JSON.stringify(toSend), process.env.JWT_ACCESS_SECRET);
           // save the access token in an http only cookie
           res.cookie("accessToken", accessToken, { httpOnly: true });
-          return res.status(200).json(user.toJSON());
+          return res.status(200).json(toSend);
         }
       });
     }

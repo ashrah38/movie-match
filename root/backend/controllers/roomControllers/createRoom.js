@@ -11,7 +11,6 @@ const createRoom = (req, res) => {
     categories = req.body.categories;
     memberId = req.user._id;
   }
-
   //new room code
   const roomCode = crypto.randomBytes(3).toString("hex");
 
@@ -22,7 +21,6 @@ const createRoom = (req, res) => {
     categories: categories,
     members: [memberId],
   });
-
   //creating document in db
   Room.create(newRoom, (err, room) => {
     if (err) {

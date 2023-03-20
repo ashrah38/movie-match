@@ -12,7 +12,6 @@ const authenticateToken = async (req, res, next) => {
   try {
     // verifies the JWT
     jwt.verify(token, process.env.JWT_ACCESS_SECRET, (err, user) => {
-      console.log(user);
       // sends a 403 code if the JWT is expired or tampered with
       if (err) {
         console.log(err);

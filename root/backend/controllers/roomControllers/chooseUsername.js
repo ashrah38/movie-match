@@ -13,7 +13,6 @@ const chooseUsername = (req, res) => {
       if (!error) return res.sendStatus(501);
       else return res.sendStatus(500);
     } else {
-      console.log(user);
       user.username = username;
       user.save();
     }
