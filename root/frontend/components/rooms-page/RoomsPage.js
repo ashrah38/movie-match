@@ -59,7 +59,7 @@ const RoomsPage = ({ navigation }) => {
         <JoinRoom widgetStyles={joinRoomStyles} onCancel={onCancelHandler} />
         <View style={roomDisplayStyles}>
           <Button title="Create Room" style={styles.roomsBtn} onPress={() => createRoomBtnHandler()} />
-          <Button title="Join Room" style={styles.roomsBtn} onPress={() => joinRoomBtnHandler()} />
+          <Button title="Join Room" style={styles.roomsBtn} onPress={() => joinRoomBtnHandler()} navigation={navigation} />
           <View style={styles.recentRoomsWidget}>
             <Button title="Recent Rooms" style={styles.roomsBtn} />
           </View>

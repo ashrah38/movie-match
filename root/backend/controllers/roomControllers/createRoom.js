@@ -13,7 +13,7 @@ const createRoom = (req, res) => {
   }
   //new room code
   const roomCode = crypto.randomBytes(3).toString("hex");
-
+  roomCode = roomCode.toUpperCase();
   //new room object
   const newRoom = new Room({
     roomName: roomName,
@@ -46,7 +46,7 @@ const createRoom = (req, res) => {
           });
           user.save();
           console.log("Created Room");
-          res.send(JSON.stringify(roomCode.toUpperCase()));
+          res.send(JSON.stringify(roomCode));
         }
       });
     }

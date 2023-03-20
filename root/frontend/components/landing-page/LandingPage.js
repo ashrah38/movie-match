@@ -5,6 +5,7 @@ import NewAccountForm from "./CreateAccountForm";
 import RoomsPage from "../rooms-page/RoomsPage";
 import StartPage from "../rooms-page/StartPage";
 import CountdownPage from "../rooms-page/CountdownPage";
+import JoinRoomBuffer from "../rooms-page/JoinRoomBuffer";
 import { LandingPageContext } from "./LandingPageContext";
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const LandingPage = () => {
         <Stack.Screen name="Rooms" component={RoomsPage} options={{ headerShown: false }} />
         <Stack.Screen name="StartPage" component={StartPage} options={{ headerShown: false }} />
         <Stack.Screen name="CountdownPage" component={CountdownPage} options={{ headerShown: false }} />
+        <Stack.Screen name="JoinRoomBuffer" component={JoinRoomBuffer} options={{ headerShown: false }} />
       </Stack.Navigator>
     </LandingPageContext.Provider>
   );

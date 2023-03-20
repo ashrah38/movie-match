@@ -14,7 +14,7 @@ router.post("/chooseUsername", authenticateToken, (req, res) => {
   chooseUsername(req, res);
 });
 
-router.get("/joinRoom", authenticateToken, (req, res) => {
+router.post("/joinRoom", authenticateToken, (req, res) => {
   joinRoom(req, res);
 });
 

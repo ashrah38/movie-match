@@ -31,9 +31,7 @@ const CreateRoom = ({ widgetStyles, onCancel, navigation, setRoomName }) => {
     } else {
       formatVerified = true;
     }
-
     // only when the format is verified does the following trigger
-
     if (formatVerified) {
       setRoomName(roomName);
       navigation.navigate("StartPage");
