@@ -26,9 +26,6 @@ const CountdownPage = ({ navigation }) => {
     onChangeStartCountdown(true);
     onChangeCountdownHide();
     // what needs to be sent to the server
-    console.log(context.roomName);
-    console.log(context.roomCode);
-    console.log(context.chosenCategories);
     const token = await AsyncStorage.getItem("accessToken");
     const requestOptions = {
       method: "POST",

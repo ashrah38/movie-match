@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { View, Text, Alert } from "react-native";
-import * as Clipboard from "expo-clipboard";
-import { Button } from "@react-native-material/core";
-import ButtonContainer from "../generic/ButtonContainer";
+import { useNavigation } from "@react-navigation/native";
 import styles from "../../styles";
 
 const Countdown = ({ widgetStyles, seconds, startCountdown }) => {
+  const navigation = useNavigation();
   const [timeLeft, setTimeLeft] = useState(seconds);
   useEffect(() => {
     if (startCountdown) {
@@ -14,6 +13,9 @@ const Countdown = ({ widgetStyles, seconds, startCountdown }) => {
       }, 1000);
       if (timeLeft === 1) {
         // here, redirect the app to the swiping component.
+        setTimeout(() => {
+          navigation.navigate("SwipingPage");
+        }, 1000);
         clearInterval(timer);
       }
       return () => clearInterval(timer);
