@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { SafeAreaView, View, Text } from "react-native";
 import { Button } from "@react-native-material/core";
 import Banner from "../generic/Banner";
+import Toolbar from "../generic/Toolbar";
 import styles from "../../styles";
 import ChooseUsername from "./ChooseUsername";
 import CreateRoom from "./CreateRoom";
@@ -47,6 +48,7 @@ const RoomsPage = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.primaryContainer}>
+      <Toolbar />
       <Banner />
       <View style={styles.roomsContainer}>
         <ChooseUsername widgetStyles={chooseUsernameStyles} onCancel={onCancelHandler} usernameCheck={setHasChosenUsername} />

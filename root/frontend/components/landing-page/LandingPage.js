@@ -42,13 +42,13 @@ const LandingPage = () => {
       }}
     >
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginForm} options={{ headerShown: false }} />
-        <Stack.Screen name="NewAccount" component={NewAccountForm} options={{ headerShown: false }} />
-        <Stack.Screen name="Rooms" component={RoomsPage} options={{ headerShown: false }} />
-        <Stack.Screen name="StartPage" component={StartPage} options={{ headerShown: false }} />
-        <Stack.Screen name="CountdownPage" component={CountdownPage} options={{ headerShown: false }} />
-        <Stack.Screen name="JoinRoomBuffer" component={JoinRoomBuffer} options={{ headerShown: false }} />
-        <Stack.Screen name="SwipingPage" component={SwipingPage} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginForm} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="NewAccount" component={NewAccountForm} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="Rooms" component={RoomsPage} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="StartPage" component={StartPage} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="CountdownPage" component={CountdownPage} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="JoinRoomBuffer" component={JoinRoomBuffer} options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="SwipingPage" component={SwipingPage} options={{ headerShown: false, gestureEnabled: false }} />
       </Stack.Navigator>
     </LandingPageContext.Provider>
   );

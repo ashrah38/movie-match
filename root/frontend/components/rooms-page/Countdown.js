@@ -14,7 +14,7 @@ const Countdown = ({ widgetStyles, seconds, startCountdown }) => {
       if (timeLeft === 1) {
         // here, redirect the app to the swiping component.
         setTimeout(() => {
-          navigation.navigate("SwipingPage");
+          navigation.replace("SwipingPage");
         }, 1000);
         clearInterval(timer);
       }
