@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const CARD_WIDTH = SCREEN_WIDTH * 0.8;
+const CARD_HEIGHT = SCREEN_HEIGHT * 0.5;
 const mainBackgroundColor = "#f6f6f6";
 const primaryFont = "Palatino";
 const fontSizeInput = 20;
@@ -215,6 +220,139 @@ const styles = StyleSheet.create({
   countdownTimer: {
     fontSize: 400,
     fontWeight: "bold",
+  },
+  swipeScreenContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  deckContainer: {
+    flex: 5,
+    alignItems: "center",
+  },
+  cardStyle: {
+    position: "absolute",
+    width: SCREEN_WIDTH * 0.8,
+    height: SCREEN_HEIGHT * 0.5,
+    borderRadius: 10,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#e3e3e3",
+    shadowColor: "#e5e5e5",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+  },
+  deckTextStyle: {
+    fontSize: 32,
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
+  },
+  deckImageStyle: {
+    height: "100%",
+    width: "100%",
+    borderRadius: 10,
+  },
+  circleContainerLeft: {
+    height: 65,
+    width: 65,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 20,
+    left: "10%",
+  },
+  circleContainerRight: {
+    height: 65,
+    width: 65,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 20,
+    right: "10%",
+  },
+  circleContainerCenter: {
+    height: 65,
+    width: 65,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 20,
+    left: "45%",
+  },
+  matchBarContainer: {
+    flex: 0.5,
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  matchBarIcon: {
+    height: 35,
+    width: 35,
+    resizeMode: "contain",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: "center",
+  },
+  matchesContainer: {
+    flex: 1,
+    backgroundColor: "#F5FCFF",
+    paddingTop: 20,
+  },
+  matchWidgetTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 20,
+    textAlign: "center",
+  },
+  matchWidgetMovieContainer: {
+    width: "90%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  matchWidgetMovieImage: {
+    width: 80,
+    height: 100,
+    resizeMode: "contain",
+    marginRight: 20,
+    borderRadius: 10,
+  },
+  matchWidgetMovieDetails: {
+    flex: 1,
+  },
+  matchWidgetMovieTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  matchWidgetLikes: {
+    fontSize: 16,
+    color: "#999999",
   },
 });
 
