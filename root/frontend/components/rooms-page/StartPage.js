@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, View, Text } from "react-native";
 import Banner from "../generic/Banner";
+import Toolbar from "../generic/Toolbar";
 import Categories from "./Categories";
 import StartDisplay from "./StartDisplay";
 import styles from "../../styles";
@@ -55,6 +56,7 @@ const StartPage = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.primaryContainer}>
+      <Toolbar />
       <Banner />
       <Categories widgetStyles={categoriesStyles} chosenCategories={setCategories} hideCategories={hideCategories} />
       <StartDisplay chooseMode={chooseMode} startButtonHandler={() => startButtonHandler(roomName, categories, mode)} />

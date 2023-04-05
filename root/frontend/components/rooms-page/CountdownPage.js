@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, View, Text } from "react-native";
 import Banner from "../generic/Banner";
+import Toolbar from "../generic/Toolbar";
 import RoomCode from "./RoomCode";
 import Countdown from "./Countdown";
 import styles from "../../styles";
@@ -43,6 +44,7 @@ const CountdownPage = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.primaryContainer}>
+      <Toolbar />
       <Banner />
       <View style={styles.roomsContainer}>
         <RoomCode widgetStyles={roomCodeStyles} codeValue={roomCode} startButtonHandler={startButtonHandler} />

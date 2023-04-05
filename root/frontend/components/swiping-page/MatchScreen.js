@@ -1,8 +1,9 @@
 import React from "react";
 import { ScrollView, View, Text, StyleSheet, Image } from "react-native";
-import MatchBar from "./MatchBar";
 import Banner from "../generic/Banner";
+import Toolbar from "../generic/Toolbar";
 import styles from "../../styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MatchScreen = () => {
   const movies = [
@@ -21,21 +22,24 @@ const MatchScreen = () => {
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Banner />
-      <View style={styles.matchesContainer}>
-        <Text style={styles.matchWidgetTitle}>Matches</Text>
-        {movies.map((movie) => (
-          <View style={styles.matchWidgetMovieContainer} key={movie.id}>
-            <Image source={{ uri: movie.image }} style={styles.matchWidgetMovieImage} />
-            <View style={styles.matchWidgetMovieDetails}>
-              <Text style={styles.matchWidgetMovieTitle}>{movie.title}</Text>
-              <Text style={styles.matchWidgetLikes}>{movie.likes.join(", ")}</Text>
+    <SafeAreaView>
+      <Toolbar />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Banner />
+        <View style={styles.matchesContainer}>
+          <Text style={styles.matchWidgetTitle}>Matches</Text>
+          {movies.map((movie) => (
+            <View style={styles.matchWidgetMovieContainer} key={movie.id}>
+              <Image source={{ uri: movie.image }} style={styles.matchWidgetMovieImage} />
+              <View style={styles.matchWidgetMovieDetails}>
+                <Text style={styles.matchWidgetMovieTitle}>{movie.title}</Text>
+                <Text style={styles.matchWidgetLikes}>{movie.likes.join(", ")}</Text>
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
