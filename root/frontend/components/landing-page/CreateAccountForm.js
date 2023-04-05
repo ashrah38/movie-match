@@ -7,7 +7,9 @@ import Banner from "../generic/Banner";
 import styles from "../../styles";
 import { Button } from "@react-native-material/core";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { IP_ADDRESS } from "../../global.js";
+import IP_ADDRESS from "../../global.js";
+import { cookieExtractor } from "../../helpers/cookieExtractor";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NewAccountForm = ({ navigation }) => {
   // state used to update the input fields in real time.
@@ -47,28 +49,33 @@ const NewAccountForm = ({ navigation }) => {
       body: JSON.stringify({
         email: email,
         password: password,
-        verifyPassword: verifyPassword,
       }),
     };
+    // only when the format is verified does the POST request gets triggered.
     if (formatVerified) {
-      fetch(`http://${IP_ADDRESS}:4000/create-new`, requestOptions)
+      fetch(`http://${IP_ADDRESS}:4000/register`, requestOptions)
         .then((response) => {
-          if (response.status === 500) {
-            setErrorMsg("Something went wrong :/");
-            setErrorMsgClass("error-alert");
-            return;
-          }
           if (response.status === 501) {
             setErrorMsg("Email already in use");
             setErrorMsgClass("error-alert");
             return;
           }
-          return response.json();
+          if (response.status !== 200) {
+            setErrorMsg("Something went wrong :/");
+            setErrorMsgClass("error-alert");
+            return;
+          }
+          const token = cookieExtractor(response.headers);
+          AsyncStorage.setItem("accessToken", token);
+          return response;
         })
-        .then(() => {
-          navigate("/rooms", { replace: true });
+        .then((response) => {
+          if (response.status == 200) {
+            navigation.navigate("Rooms", { replace: true });
+          }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           setErrorMsg("Something went wrong :/");
           setErrorMsgClass("error-alert");
           return;
@@ -91,7 +98,11 @@ const NewAccountForm = ({ navigation }) => {
         <Input name="Password" value={password} secureTextEntry={true} onChangeText={onChangePassword} />
         <Input name="Verify Password" value={verifyPassword} secureTextEntry={true} onChangeText={onChangeVerifyPassword} />
         <ButtonContainer style={styles.btnContainer}>
-          <Button title="Create an Account" onPress={() => onSubmitHandler(email, password)} style={styles.largeBtn} />
+          <Button
+            title="Create an Account"
+            onPress={() => onSubmitHandler(email, password, verifyPassword)}
+            style={styles.largeBtn}
+          />
         </ButtonContainer>
       </View>
     </SafeAreaView>
