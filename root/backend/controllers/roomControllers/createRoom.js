@@ -33,7 +33,7 @@ const createRoom = (req, res) => {
         res.sendStatus(500);
       }
     } else {
-      //adding room to user document
+      //adding room and iterator to user document
       User.findById(memberId, (err, user) => {
         if (err || user === null) {
           console.log("Error finding user", err);
@@ -44,8 +44,11 @@ const createRoom = (req, res) => {
             roomName: roomName,
             roomCode: roomCode,
           });
+          user.deckPosTracker.push({
+            roomCode: roomCode,
+            iterator: 0,
+          });
           user.save();
-          console.log("Created Room");
           res.send(JSON.stringify(roomCode));
         }
       });

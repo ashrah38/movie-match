@@ -23,13 +23,20 @@ const joinRoom = (req, res) => {
           if (!error) return res.sendStatus(501);
           else return res.sendStatus(500);
         } else {
+          // add the room to the user romos, and add the iterator if the iterator does not exist already.
           if (!user.myRooms.some((doc) => doc.roomCode === roomCode)) {
             user.myRooms.push({
               roomName: roomName,
               roomCode: roomCode,
             });
-            user.save();
           }
+          if (user.deckPosTracker.some((doc) => doc.roomCode === roomCode)) {
+            user.deckPosTracker.push({
+              roomCode: roomCode,
+              iterator: 0,
+            });
+          }
+          user.save();
           res.status(200).send(JSON.stringify(room));
         }
       });
