@@ -354,6 +354,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#999999",
   },
+  toolbarContainer: {
+    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    marginTop: 50,
+    alignItems: "center",
+    flexDirection: "row",
+    maxHeight: 30,
+    width: "100%",
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    zIndex: 100,
+  },
 });
 
 export default styles;

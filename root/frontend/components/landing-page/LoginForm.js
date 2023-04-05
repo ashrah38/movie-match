@@ -79,7 +79,7 @@ const LoginForm = ({ navigation }) => {
           } else {
             context.setHasUsername(false);
           }
-          navigation.navigate("Rooms");
+          navigation.replace("Rooms");
         })
         .catch((error) => {
           console.log(error);
