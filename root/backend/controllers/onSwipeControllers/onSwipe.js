@@ -4,6 +4,7 @@ const Room = require("../../models/Room");
 const onSwipe = (req, res) => {
   if (req.body.length !== 0) {
     userID = req.user._id;
+    username = req.user.username;
     roomCode = req.body.roomCode;
     movieID = req.body.movieID;
     swipeDirection = req.body.swipeDirection;
@@ -31,11 +32,14 @@ const likedMovie = (res, userID, roomCode, movieID) => {
   Room.findOne({ roomCode: roomCode, likedMovies: { $elemMatch: { movieID: movieID } } }, (error, room) => {
     if (error) return res.sendStatus(500);
     if (room) {
-      Room.findOneAndUpdate({ roomCode: roomCode, "likedMovies.movieID": movieID }, { $push: { "likedMovies.$.users": userID } })
+      Room.findOneAndUpdate(
+        { roomCode: roomCode, "likedMovies.movieID": movieID },
+        { $push: { "likedMovies.$.users": username } }
+      )
         .then()
         .catch((err) => console.log(err));
     } else {
-      Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [userID] } } })
+      Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [username] } } })
         .then()
         .catch((err) => console.log(err));
     }

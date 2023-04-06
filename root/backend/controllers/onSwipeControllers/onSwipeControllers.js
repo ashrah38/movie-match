@@ -19,7 +19,7 @@ router.get("/getPersonalMatches", authenticateToken, (req, res) => {
   getPersonalMatches(req, res);
 });
 
-router.get("/getGroupMatches", authenticateToken, (req, res) => {
+router.get("/getGroupMatches", (req, res) => {
   getGroupMatches(req, res);
 });
 
