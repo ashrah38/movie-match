@@ -26,7 +26,6 @@ export const getDeckOfMovies = async (context) => {
         keyIterator += 1;
       });
       context.updateMovieDeck(treatedData);
-      console.log(treatedData);
       return;
     })
     .catch((err) => console.log(err));

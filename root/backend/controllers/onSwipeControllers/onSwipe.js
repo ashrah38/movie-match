@@ -32,11 +32,11 @@ const likedMovie = (res, userID, roomCode, movieID) => {
     if (error) return res.sendStatus(500);
     if (room) {
       Room.findOneAndUpdate({ roomCode: roomCode, "likedMovies.movieID": movieID }, { $push: { "likedMovies.$.users": userID } })
-        .then()
+        .then(() => res.sendStatus(200))
         .catch((err) => console.log(err));
     } else {
       Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [userID] } } })
-        .then()
+        .then(() => res.sendStatus(200))
         .catch((err) => console.log(err));
     }
   });

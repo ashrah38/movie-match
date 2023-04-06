@@ -50,12 +50,16 @@ const populateDeckAndSend = (req, res, room, categories, numItems, iterator = nu
         if (results != undefined) {
           for (let i = 0; i < results.length; i++) {
             const randomIndex = getRandomInt(0, 49);
+            // parsedItem is the object to be added, if it does not already exist.
             const parsedItem = parseMovieObject(results[randomIndex]);
-            if (!room.deck.includes(parsedItem)) {
+            if (!room.deck.find((obj) => obj.imdbid == parsedItem.imdbid)) {
               room.deck.push(parsedItem);
               itemsPushed += 1;
               if (itemsPushed == numItems) {
-                room.save();
+                room
+                  .save()
+                  .then()
+                  .catch((err) => console.log(err));
                 break;
               }
             }
@@ -89,11 +93,14 @@ const populateDeckAndSend = (req, res, room, categories, numItems, iterator = nu
           for (let i = 0; i < results.length; i++) {
             const randomIndex = getRandomInt(0, 49);
             const parsedItem = parseMovieObject(results[randomIndex]);
-            if (!room.deck.includes(parsedItem)) {
+            if (!room.deck.find((obj) => obj.imdbid == parsedItem.imdbid)) {
               room.deck.push(parsedItem);
               itemsPushed += 1;
               if (itemsPushed == numItems) {
-                room.save();
+                room
+                  .save()
+                  .then()
+                  .catch((err) => console.log(err));
                 break;
               }
             }
