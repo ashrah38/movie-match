@@ -180,21 +180,21 @@ const MovieDeck = () => {
       <View style={{ position: "absolute", width: "100%", bottom: 0 }}>
         <TouchableOpacity onPress={swipeLeft} style={[styles.circleContainerLeft, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/2601/2601781.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/1828/1828843.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeUp} style={[styles.circleContainerCenter, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/2601/2601780.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/833/833408.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeRight} style={[styles.circleContainerRight, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/391/391175.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/5290/5290058.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>

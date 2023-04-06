@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     bottom: 20,
-    left: "45%",
+    left: "43%", // 43% makes it look like in center
   },
   matchBarContainer: {
     flex: 0.5,
