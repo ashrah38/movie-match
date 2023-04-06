@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, useRef } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginForm from "./LoginForm";
 import NewAccountForm from "./CreateAccountForm";
@@ -15,6 +15,8 @@ const LandingPage = () => {
   const [roomName, setRoomName] = useState();
   const [roomCode, setRoomCode] = useState();
   const [chosenCategories, setChosenCategories] = useState();
+  const movieDeck = useRef();
+  const [fetchNew, setFetchNew] = useState(false);
 
   const setRoomValue = (name) => {
     setRoomName(name);
@@ -28,6 +30,14 @@ const LandingPage = () => {
     setChosenCategories(chosenCategories);
   };
 
+  const updateMovieDeck = (newDeck) => {
+    movieDeck.current = newDeck;
+  };
+
+  const setFetchValue = (value) => {
+    setFetchNew(value);
+  };
+
   return (
     <LandingPageContext.Provider
       value={{
@@ -39,6 +49,8 @@ const LandingPage = () => {
         setCodeValue,
         chosenCategories,
         setChosenCategoriesValue,
+        movieDeck,
+        updateMovieDeck,
       }}
     >
       <Stack.Navigator initialRouteName="Login">

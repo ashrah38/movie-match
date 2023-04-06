@@ -3,8 +3,6 @@ const User = require("../../models/User");
 
 //verifies room exists and adds user to the room
 const joinRoom = (req, res) => {
-  console.log("Join Room");
-
   const { roomCode } = req.body;
   let roomName = "";
   Room.findOne({ roomCode: roomCode }, (error, room) => {
@@ -30,7 +28,7 @@ const joinRoom = (req, res) => {
               roomCode: roomCode,
             });
           }
-          if (user.deckPosTracker.some((doc) => doc.roomCode === roomCode)) {
+          if (!user.deckPosTracker.some((doc) => doc.roomCode === roomCode)) {
             user.deckPosTracker.push({
               roomCode: roomCode,
               iterator: 0,

@@ -16,6 +16,8 @@ app.use(cookieParser());
 // routes
 app.use("/", require("./controllers/roomControllers/roomControllers.js"));
 app.use("/", require("./controllers/authControllers/authControllers.js"));
+app.use("/", require("./controllers/deckControllers/deckControllers.js"));
+app.use("/", require("./controllers/onSwipeControllers/onSwipeControllers.js"));
 
 // initializing port
 app.listen(port, () => console.log("Port initialized"));

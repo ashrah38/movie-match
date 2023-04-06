@@ -1,6 +1,9 @@
-import React, { useState, useRef } from "react";
-import { View, StyleSheet, PanResponder, Animated, TouchableOpacity, Image } from "react-native";
+import React, { useState, useRef, useContext } from "react";
+import { View, PanResponder, Animated, TouchableOpacity, Image } from "react-native";
 import { Dimensions } from "react-native";
+import { LandingPageContext } from "../landing-page/LandingPageContext";
+import { getDeckOfMovies } from "./server-requests/getDeckOfMovies";
+import { onSwipe } from "./server-requests/onSwipe";
 import styles from "../../styles";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -8,17 +11,14 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_WIDTH = SCREEN_WIDTH * 0.8;
 const CARD_HEIGHT = SCREEN_HEIGHT * 0.5;
 
-const DATA = [
-  { id: 1, text: "Card 1", url: "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" },
-  { id: 2, text: "Card 2", url: "https://i.etsystatic.com/13669063/r/il/0b9f6f/2963422074/il_570xN.2963422074_2p88.jpg" },
-  { id: 3, text: "Card 3", url: "https://m.media-amazon.com/images/I/61a03Zq9oRL._AC_.jpg" },
-  { id: 4, text: "Card 4", url: "https://i.ebayimg.com/images/g/4XAAAOSwKOVitgWd/s-l1600.jpg" },
-];
-
 const MovieDeck = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = new Animated.ValueXY();
   const opacity = useRef(new Animated.Value(1)).current;
+
+  // use context to obtain the movie deck.
+  const context = useContext(LandingPageContext);
+  let movieDeck = context.movieDeck.current;
 
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (evt, gestureState) => {
@@ -30,33 +30,33 @@ const MovieDeck = () => {
     },
     onPanResponderRelease: (evt, gestureState) => {
       if (gestureState.dx > 120) {
-        sendSwipeDataDemo(1);
+        sendSwipeData(1);
         // Swipe right sendSwipeData(1)
         Animated.spring(position, {
           toValue: { x: 500, y: gestureState.dy },
           useNativeDriver: false,
         }).start(() => {
-          setCurrentIndex(currentIndex + 1);
+          setCurrentIndex((currentIndex + 1) % 10);
           position.setValue({ x: 0, y: 0 });
         });
       } else if (gestureState.dx < -120) {
-        sendSwipeDataDemo(0);
+        sendSwipeData(0);
         // Swipe left sendSwipeData(0)
         Animated.spring(position, {
           toValue: { x: -500, y: gestureState.dy },
           useNativeDriver: false,
         }).start(() => {
-          setCurrentIndex(currentIndex + 1);
+          setCurrentIndex((currentIndex + 1) % 10);
           position.setValue({ x: 0, y: 0 });
         });
       } else if (gestureState.dy < -200) {
         // Swipe up (dismiss) sendSwipeData(2)
-        sendSwipeDataDemo(2);
+        sendSwipeData(2);
         Animated.timing(position, {
           toValue: { x: 0, y: -200 },
           useNativeDriver: false,
         }).start(() => {
-          setCurrentIndex(currentIndex + 1);
+          setCurrentIndex((currentIndex + 1) % 10);
           position.setValue({ x: 0, y: 0 });
         });
       } else {
@@ -70,12 +70,12 @@ const MovieDeck = () => {
   });
 
   const sendSwipeData = (swipeDirection) => {
-    // Here you would send the data to the backend, passing in the movie id and swipe direction (0 for left, 1 for right)
-    console.log("Sending swipe data:", currentCard.id, swipeDirection);
-  };
-  const sendSwipeDataDemo = (swipeDirection) => {
-    // Here you would send the data to the backend, passing in the movie id and swipe direction (0 for left, 1 for right)
-    console.log("Direction: ", swipeDirection);
+    onSwipe(context, movieDeck[currentIndex].imdbid, swipeDirection);
+    // on every swipe, send movieId and swipeDirection back to the server.
+    // Here you would send the data to the backend, passing in the movie id and swipe direction (0 for left, 1 for right, 2 for up)
+    if (currentIndex == 9) {
+      getDeckOfMovies(context);
+    }
   };
 
   const rotateCard = position.x.interpolate({
@@ -84,31 +84,31 @@ const MovieDeck = () => {
   });
 
   const swipeLeft = () => {
-    sendSwipeDataDemo(0);
+    sendSwipeData(0);
     Animated.timing(position, {
       toValue: { x: -500, y: 0 },
       duration: 500, // adjust duration as needed
       useNativeDriver: false,
     }).start(() => {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex((currentIndex + 1) % 10);
       position.setValue({ x: 0, y: 0 });
     });
   };
 
   const swipeRight = () => {
-    sendSwipeDataDemo(1);
+    sendSwipeData(1);
     Animated.timing(position, {
       toValue: { x: 500, y: 0 },
       duration: 500, // adjust duration as needed
       useNativeDriver: false,
     }).start(() => {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex((currentIndex + 1) % 10);
       position.setValue({ x: 0, y: 0 });
     });
   };
 
   const swipeUp = () => {
-    sendSwipeDataDemo(2);
+    sendSwipeData(2);
     Animated.parallel([
       Animated.timing(opacity, {
         toValue: 0,
@@ -153,23 +153,25 @@ const MovieDeck = () => {
   };
 
   const renderCards = () => {
-    return DATA.map((item, index) => {
-      if (index < currentIndex) {
-        return null;
-      } else if (index === currentIndex) {
-        return (
-          <Animated.View key={item.id} style={[styles.cardStyle, animatedStyle]} {...panResponder.panHandlers}>
-            <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
-          </Animated.View>
-        );
-      } else {
-        return (
-          <Animated.View key={item.id} style={[styles.cardStyle]}>
-            <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
-          </Animated.View>
-        );
-      }
-    }).reverse();
+    return movieDeck
+      .map((item, index) => {
+        if (index < currentIndex) {
+          return null;
+        } else if (index === currentIndex) {
+          return (
+            <Animated.View key={item.id} style={[styles.cardStyle, animatedStyle]} {...panResponder.panHandlers}>
+              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
+            </Animated.View>
+          );
+        } else {
+          return (
+            <Animated.View key={item.id} style={[styles.cardStyle]}>
+              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
   };
 
   return (
