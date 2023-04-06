@@ -1,13 +1,12 @@
 import { useState, useContext } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, View, Text } from "react-native";
 import Banner from "../generic/Banner";
 import Toolbar from "../generic/Toolbar";
 import RoomCode from "./RoomCode";
 import Countdown from "./Countdown";
 import styles from "../../styles";
+import { getDeckOfMovies } from "../swiping-page/server-requests/getDeckOfMovies";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
-import IP_ADDRESS from "../../global";
 
 const CountdownPage = ({ navigation }) => {
   const context = useContext(LandingPageContext);
@@ -26,20 +25,7 @@ const CountdownPage = ({ navigation }) => {
     // start and display the countdown
     onChangeStartCountdown(true);
     onChangeCountdownHide();
-    // what needs to be sent to the server
-    const token = await AsyncStorage.getItem("accessToken");
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json", accessToken: token },
-      body: JSON.stringify({}),
-    };
-    // code this fetch request once backend is in order.
-    // fetch(`http://${IP_ADDRESS}:4000/getDeck`, requestOptions).then((response) => {
-    //   // add error handling here when someone has time
-    //   if (response.status == 500) return;
-    //   // if no error, assume the correct response has been received.
-    //   return response.json();
-    // });
+    getDeckOfMovies(context);
   };
 
   return (

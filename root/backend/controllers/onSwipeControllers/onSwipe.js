@@ -1,95 +1,63 @@
-const User = require('../../models/User');
-const Room = require('../../models/Room');
+const User = require("../../models/User");
+const Room = require("../../models/Room");
 
-const onSwipe  = (req, res) => {
-  console.log("Swiping")
-
-  //userID, roomID, movieID, {liked, disliked, seen}
-  if(req.body.length !== 0){
-    userID = req.user._id 
-    roomID = req.body.roomID
-    movieID = req.body.movieID
-    swipeCategory = req.body.swipeCategory
+const onSwipe = (req, res) => {
+  if (req.body.length !== 0) {
+    userID = req.user._id;
+    roomCode = req.body.roomCode;
+    movieID = req.body.movieID;
+    swipeDirection = req.body.swipeDirection;
   }
 
-  if(swipeCategory === "liked"){
-    likedMovie(userID, roomID, movieID);
-  }else if(swipeCategory === "disliked"){
-    dislikedMovie(userID, roomID, movieID);
-  }else if(swipeCategory === "seen"){
-    likesButHasSeen(userID, roomID, movieID);
+  if (swipeDirection == 1) {
+    likedMovie(res, userID, roomCode, movieID);
+  } else if (swipeDirection == 0) {
+    dislikedMovie(res, userID, roomCode);
+  } else if (swipeDirection == 2) {
+    likesButHasSeen(res, userID, roomCode, movieID);
   }
-}
+};
 
-const likedMovie = (userID, roomID, movieID) => {
-  //add to user document, swipeHistory
-  User.findOne({_id: userID}, (error, user) => {
-    if (error || user === null) {
-      if(!error) return res.sendStatus(501);
-      else return res.sendStatus(500);
-    } else {
-      //get swipe history (first array is liked, second array is disliked)
-      //check if movie exists in liked movies list, if not push it in
-      if (!user.swipeHistory[0].includes(movieID)) {
-        user.swipeHistory[0].push({
-          movieID
-        });
-        user.save();
-      }
-    }
-  })
+const likedMovie = (res, userID, roomCode, movieID) => {
+  //add to user document - likedMovies, and increment the iterator
+  User.findOneAndUpdate(
+    { _id: userID, "deckPosTracker.roomCode": roomCode },
+    { $inc: { "deckPosTracker.$.iterator": 1 }, $push: { likedMovies: movieID } }
+  )
+    .then()
+    .catch((err) => console.log(err));
+
   //add to room document, likedMovies (if exists, add the userId, else create the array)
-  Room.findOne({_id: roomID}, (error, room) => {
-    if (error || user === null) {
-      if(!error) return res.sendStatus(501);
-      else return res.sendStatus(500);
+  Room.findOne({ roomCode: roomCode, likedMovies: { $elemMatch: { movieID: movieID } } }, (error, room) => {
+    if (error) return res.sendStatus(500);
+    if (room) {
+      Room.findOneAndUpdate({ roomCode: roomCode, "likedMovies.movieID": movieID }, { $push: { "likedMovies.$.users": userID } })
+        .then()
+        .catch((err) => console.log(err));
     } else {
-      if(!room.likedMovies.includes(movieID)){
-        room.likedMovies.push({
-          movieID: movieID,
-          users: {userID}
-        })
-      }else{
-        room.likedMovies.movieID.push(userID)
-      }
-      room.save();
+      Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [userID] } } })
+        .then()
+        .catch((err) => console.log(err));
     }
-  })
-  res.sendStatus(200);
-}
+  });
+};
 
-const dislikedMovie = (userID, movieID) => {
-  User.findOne({_id: userID}, (error, user) => {
-    if (error || user === null) {
-      if(!error) return res.sendStatus(501);
-      else return res.sendStatus(500);
-    } else {
-      if (!user.swipeHistory[1].includes(movieID)) {
-        user.swipeHistory[1].push({
-          movieID
-        });
-        user.save();
-      }
-    }
-  })
-  res.sendStatus(200);
-}
+const dislikedMovie = (res, userID, roomCode) => {
+  User.findOneAndUpdate({ _id: userID, "deckPosTracker.roomCode": roomCode }, { $inc: { "deckPosTracker.$.iterator": 1 } })
+    .then(() => {
+      return res.sendStatus(200);
+    })
+    .catch((error) => console.log(error));
+};
 
-const likesButHasSeen = (userID, movieID) => {
-  User.findOne({_id: userID}, (error, user) => {
-    if (error || user === null) {
-      if(!error) return res.sendStatus(501);
-      else return res.sendStatus(500);
-    } else {
-      if (!user.seen.includes(movieID)) {
-        user.seen.push({
-          movieID
-        });
-        user.save();
-      }
-    }
-  })
-  res.sendStatus(200);
-}
+const likesButHasSeen = (res, userID, movieID) => {
+  //add to user document - likedMovies, and increment the iterator
+  User.findOneAndUpdate(
+    { _id: userID, "deckPosTracker.roomCode": roomCode },
+    { $inc: { "deckPosTracker.$.iterator": 1 }, $push: { likedMovies: movieID } }
+  )
+    .then(() => res.sendStatus(200))
+    .catch((err) => console.log(err));
+};
 
-module.exports=onSwipe
+module.exports = onSwipe;

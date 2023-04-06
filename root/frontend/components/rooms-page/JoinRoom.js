@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, Alert } from "react-native";
 import { Button } from "@react-native-material/core";
 import styles from "../../styles";
@@ -6,9 +6,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonContainer from "../generic/ButtonContainer";
 import { Input } from "../generic/FormComponents";
 import IP_ADDRESS from "../../global";
+import { LandingPageContext } from "../landing-page/LandingPageContext";
+
 import { useNavigation } from "@react-navigation/native";
 
 const JoinRoom = ({ widgetStyles, onCancel }) => {
+  // store the room code value in context.
+  const context = useContext(LandingPageContext);
   const navigation = useNavigation();
   // state used to update the username
   const [roomCode, onChangeRoomCode] = useState("");
@@ -20,6 +24,7 @@ const JoinRoom = ({ widgetStyles, onCancel }) => {
 
   // make a POST request to the server ccontaining the room code.
   const onSubmitHandler = async (roomCode) => {
+    context.setCodeValue(roomCode);
     const token = await AsyncStorage.getItem("accessToken");
 
     // room code cannot be less than 6 characters
