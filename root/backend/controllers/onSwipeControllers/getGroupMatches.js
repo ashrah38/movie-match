@@ -1,29 +1,29 @@
-const Room = require('../../models/Room');
-
-const getGroupMatches = (req, res) => {
-  //need roomID
-  if(req.body.length !== 0){
-    roomID = req.body.roomID
-  }
-
-  let getGroupMatches = [];
-  Room.findOne({_id: roomID}, (error, room) => {
-    if (error || user === null) {
-      if(!error) return res.sendStatus(501);
-      else return res.sendStatus(500);
-    } else {
-      if(!room.likedMovies.length !== 0){
-        for(var i = 0; i < room.likedMovies.length; i++){
-          //might need to do this differently if we want to sort
-          //could use a type of map or heap
-          if(room.likedMovies[i].length >= 2){
-            getGroupMatches.push(Object.keys(room.likedMovies)[i])
-          }
-        }
-      }
+const Room = require("../../models/Room");
+const Movies = require("../../models/Movies");
+const User = require("../../models/User");
+const getGroupMatches = async (req, res) => {
+  const roomCode = req.query.roomCode;
+  let matchesList = [];
+  const room = await Room.findOne({ roomCode: roomCode });
+  const likedMovies = room.likedMovies;
+  const matchesPromises = likedMovies.map(async (item) => {
+    // more than one person has liked it.
+    if (item.users.length > 1) {
+      let matchesObject = { title: null, url: null, likedBy: item.users };
+      const movie = await Movies.findOne({ imdbid: item.movieID });
+      matchesObject.title = movie.title;
+      matchesObject.url = movie.image;
+      return matchesObject;
     }
-  })
-  res.send(getGroupMatches)
-}
+  });
+  Promise.all(matchesPromises)
+    .then((matchesList) => {
+      res.send(JSON.stringify(matchesList));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+};
 
 module.exports = getGroupMatches;
