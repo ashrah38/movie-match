@@ -4,6 +4,7 @@ import { Dimensions } from "react-native";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
 import { getDeckOfMovies } from "./server-requests/getDeckOfMovies";
 import { onSwipe } from "./server-requests/onSwipe";
+import { debounce } from "lodash";
 import styles from "../../styles";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -83,8 +84,7 @@ const MovieDeck = () => {
     outputRange: ["-120deg", "0deg", "120deg"],
   });
 
-  const swipeLeft = () => {
-    sendSwipeData(0);
+  const swipeLeft = debounce(() => {
     Animated.timing(position, {
       toValue: { x: -500, y: 0 },
       duration: 500, // adjust duration as needed
@@ -93,10 +93,10 @@ const MovieDeck = () => {
       setCurrentIndex((currentIndex + 1) % 10);
       position.setValue({ x: 0, y: 0 });
     });
-  };
+    sendSwipeData(0);
+  }, 300);
 
-  const swipeRight = () => {
-    sendSwipeData(1);
+  const swipeRight = debounce(() => {
     Animated.timing(position, {
       toValue: { x: 500, y: 0 },
       duration: 500, // adjust duration as needed
@@ -105,10 +105,10 @@ const MovieDeck = () => {
       setCurrentIndex((currentIndex + 1) % 10);
       position.setValue({ x: 0, y: 0 });
     });
-  };
+    sendSwipeData(1);
+  }, 300);
 
-  const swipeUp = () => {
-    sendSwipeData(2);
+  const swipeUp = debounce(() => {
     Animated.parallel([
       Animated.timing(opacity, {
         toValue: 0,
@@ -125,7 +125,8 @@ const MovieDeck = () => {
       position.setValue({ x: 0, y: 0 });
       opacity.setValue(1);
     });
-  };
+    sendSwipeData(2);
+  }, 300);
 
   const animatedStyle = {
     transform: [
@@ -180,21 +181,21 @@ const MovieDeck = () => {
       <View style={{ position: "absolute", width: "100%", bottom: 0 }}>
         <TouchableOpacity onPress={swipeLeft} style={[styles.circleContainerLeft, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/2601/2601781.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/1828/1828843.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeUp} style={[styles.circleContainerCenter, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/2601/2601780.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/833/833408.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeRight} style={[styles.circleContainerRight, styles.shadowProp]}>
           <Image
-            source={{ uri: "https://cdn-icons-png.flaticon.com/512/391/391175.png" }}
+                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/5290/5290058.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
