@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 50,
   },
-  title: {
-    fontSize: 54,
-    fontWeight: "bold",
+  logo: {
+    width: 300,
+    height: 100,
   },
   inputField: {
     height: 50,
