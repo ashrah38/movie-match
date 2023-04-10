@@ -150,6 +150,9 @@ const styles = StyleSheet.create({
     minWidth: "85%",
     marginBottom: 40,
   },
+  recentRoomsTitle: {
+    minWidth: "85%",
+  },
   categoryBtn: {
     margin: 2,
   },
@@ -171,6 +174,33 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 3,
+  },
+  recentRoomsBtnContainer: {
+    height: "100%",
+    width: "100%",
+  },
+  recentRoomsBtn: {
+    flex: 1,
+    height: "20%",
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+    justifyContent: "center",
+    padding: 20,
+    margin: 2,
+    shadowColor: "#ccc",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 3,
+  },
+  recentRoomsName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  recentRoomsCode: {
+    fontSize: 16,
+    color: "#aaa",
   },
   widgetHeading: {
     fontSize: 24,
