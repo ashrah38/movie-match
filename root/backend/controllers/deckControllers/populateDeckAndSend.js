@@ -59,7 +59,8 @@ const populateDeckAndSend = (req, res, room, categories, numItems, iterator = nu
                 room
                   .save()
                   .then()
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {});
                 break;
               }
             }

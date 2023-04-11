@@ -3,12 +3,16 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../styles";
 
-const MatchBar = () => {
+const MatchBar = ({ changeModalVisible }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.matchBarContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          changeModalVisible(true);
+        }}
+      >
         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/921/921347.png" }} style={styles.matchBarIcon} />
       </TouchableOpacity>
       <TouchableOpacity>

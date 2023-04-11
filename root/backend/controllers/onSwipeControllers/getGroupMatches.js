@@ -2,6 +2,7 @@ const Room = require("../../models/Room");
 const Movies = require("../../models/Movies");
 const User = require("../../models/User");
 const getGroupMatches = async (req, res) => {
+  console.log("Getting group matches");
   const roomCode = req.query.roomCode;
   let matchesList = [];
   const room = await Room.findOne({ roomCode: roomCode });
@@ -18,7 +19,8 @@ const getGroupMatches = async (req, res) => {
   });
   Promise.all(matchesPromises)
     .then((matchesList) => {
-      res.send(JSON.stringify(matchesList));
+      const filteredArray = matchesList.filter((item) => item != null);
+      res.send(JSON.stringify(filteredArray));
     })
     .catch((err) => {
       console.log(err);

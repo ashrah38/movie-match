@@ -32,11 +32,14 @@ const likedMovie = (res, userID, roomCode, movieID) => {
   Room.findOne({ roomCode: roomCode, likedMovies: { $elemMatch: { movieID: movieID } } }, (error, room) => {
     if (error) return res.sendStatus(500);
     if (room) {
-      Room.findOneAndUpdate({ roomCode: roomCode, "likedMovies.movieID": movieID }, { $push: { "likedMovies.$.users": userID } })
+      Room.findOneAndUpdate(
+        { roomCode: roomCode, "likedMovies.movieID": movieID },
+        { $push: { "likedMovies.$.users": username } }
+      )
         .then()
         .catch((err) => console.log(err));
     } else {
-      Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [userID] } } })
+      Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [username] } } })
         .then()
         .catch((err) => console.log(err));
     }

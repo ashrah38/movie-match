@@ -30,6 +30,7 @@ const StartPage = ({ navigation }) => {
   // send a post request to the server.
   // the payload includes a room name, categories [], and mode.
   const startButtonHandler = async (roomName, categories, mode) => {
+    console.log("Request sent");
     const token = await AsyncStorage.getItem("accessToken");
     const requestOptions = {
       method: "POST",
