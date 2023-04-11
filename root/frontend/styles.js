@@ -264,12 +264,13 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * 0.8,
     height: SCREEN_HEIGHT * 0.5,
     borderRadius: 10,
-    backgroundColor: "white",
+    padding: 2,
+    backgroundColor: "#f6f6f6",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#e3e3e3",
-    shadowColor: "#e5e5e5",
+    borderColor: "#f6f6f6",
+    shadowColor: "#f6f6f6",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -338,7 +339,7 @@ const styles = StyleSheet.create({
   },
   matchesContainer: {
     flex: 1,
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "#f6f6f6",
     paddingTop: 20,
   },
   matchWidgetTitle: {

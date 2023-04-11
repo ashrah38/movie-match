@@ -12,6 +12,7 @@ import JoinRoom from "./JoinRoom";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
 
 const RoomsPage = ({ navigation }) => {
+  console.log("Rooms Page");
   // use context to see whether a user has a username
   const context = useContext(LandingPageContext);
   // state used to keep track of when the user has selected a username
@@ -24,7 +25,7 @@ const RoomsPage = ({ navigation }) => {
   const [chooseUsernameStyles, onChangeChooseUsernameStyles] = useState([styles.roomWidgets, styles.hideWidget]);
   // state to keep track of the recent rooms widget
   const [recentRooms, onChangeRecentRooms] = useState([]);
-  // if username does not exist, then display the username widget
+  // fetch recent rooms for this user
   useEffect(() => {
     // send an http request to fetch recent rooms
     const getRecentRooms = async () => {
@@ -44,6 +45,11 @@ const RoomsPage = ({ navigation }) => {
         console.log(error);
       }
     };
+    getRecentRooms();
+  }, []);
+
+  // if username does not exist, then display the username widget
+  useEffect(() => {
     if (!context.hasUsername && !hasChosenUsername) {
       onChangeRoomDisplayStyles(styles.hideMainRoomDisplay);
       onChangeChooseUsernameStyles(styles.roomWidgets);
