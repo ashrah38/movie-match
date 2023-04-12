@@ -7,16 +7,19 @@ const getMembers = async (req, res) => {
   let usernamesToSend = [];
   const room = await Room.findOne({ roomCode: roomCode });
   const listOfUsers = room.members;
+  let iterator = 1;
   const listOfUsersPromises = listOfUsers.map(async (item) => {
     // more than one person has liked it.
     const user = await User.findOne({ _id: item });
-    usernamesToSend.push(user.username);
+    if (user) {
+      usernamesToSend.push({ username: user.username, key: iterator });
+    }
+    iterator += 1;
     return;
   });
 
   Promise.all(listOfUsersPromises)
     .then(() => {
-      console.log(usernamesToSend);
       res.send(JSON.stringify(usernamesToSend));
     })
     .catch((err) => {

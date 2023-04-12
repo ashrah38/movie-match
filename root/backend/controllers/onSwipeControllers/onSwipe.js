@@ -26,7 +26,10 @@ const likedMovie = (res, userID, roomCode, movieID) => {
     { $inc: { "deckPosTracker.$.iterator": 1 }, $push: { likedMovies: movieID } }
   )
     .then()
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return res.sendStatus(500);
+    });
 
   //add to room document, likedMovies (if exists, add the userId, else create the array)
   Room.findOne({ roomCode: roomCode, likedMovies: { $elemMatch: { movieID: movieID } } }, (error, room) => {
@@ -36,12 +39,18 @@ const likedMovie = (res, userID, roomCode, movieID) => {
         { roomCode: roomCode, "likedMovies.movieID": movieID },
         { $push: { "likedMovies.$.users": username } }
       )
-        .then()
-        .catch((err) => console.log(err));
+        .then(() => res.sendStatus(200))
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(500);
+        });
     } else {
       Room.findOneAndUpdate({ roomCode: roomCode }, { $push: { likedMovies: { movieID: movieID, users: [username] } } })
-        .then()
-        .catch((err) => console.log(err));
+        .then(() => res.sendStatus(200))
+        .catch((err) => {
+          console.log(err);
+          return res.sendStatus(500);
+        });
     }
   });
 };
@@ -50,7 +59,10 @@ const dislikedMovie = (res, userID, roomCode) => {
     .then(() => {
       return res.sendStatus(200);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      return res.sendStatus(500);
+    });
 };
 
 const likesButHasSeen = (res, userID, movieID) => {
@@ -60,7 +72,10 @@ const likesButHasSeen = (res, userID, movieID) => {
     { $inc: { "deckPosTracker.$.iterator": 1 }, $push: { likedMovies: movieID } }
   )
     .then(() => res.sendStatus(200))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return res.sendStatus(500);
+    });
 };
 
 module.exports = onSwipe;

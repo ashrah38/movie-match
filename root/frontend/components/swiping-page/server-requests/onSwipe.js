@@ -19,5 +19,8 @@ export const onSwipe = async (context, movieID, swipeDirection) => {
       // if no error, assume the correct response has been received.
       return;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return;
+    });
 };

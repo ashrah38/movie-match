@@ -197,7 +197,9 @@ const MovieDeck = ({ roomMembers, modalVisible, changeModalVisible }) => {
             <Text style={styles.modalTitle}>List of members</Text>
             <View style={styles.buttonContainer}>
               {roomMembers.map((member) => (
-                <Text style={styles.modalMember}>{member}</Text>
+                <Text key={member.key} style={styles.modalMember}>
+                  {member.username}
+                </Text>
               ))}
             </View>
           </View>

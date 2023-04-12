@@ -9,30 +9,31 @@ import styles from "../../styles";
 import IP_ADDRESS from "../../global";
 
 const SwipeScreen = () => {
+  console.log("Rooms Page");
   // use context to obtain the movie deck.
   const context = useContext(LandingPageContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [roomMembers, setMembers] = useState([]);
-  useEffect(() => {
-    const getRoomMembers = async (context) => {
-      const roomCode = context.roomCode;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      const response = await fetch(`http://${IP_ADDRESS}:4000/getMembers?roomCode=${roomCode}`, requestOptions);
-      if (response.status == 500) {
-        // throw an alert
-        return;
-      }
-      const data = await response.json();
-      // data now is an array of usernames
-      if (data) {
-        setMembers(data);
-      }
+
+  const getRoomMembers = async () => {
+    const roomCode = context.roomCode;
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     };
-    getRoomMembers(context);
-  }, []);
+    const response = await fetch(`http://${IP_ADDRESS}:4000/getMembers?roomCode=${roomCode}`, requestOptions);
+    if (response.status == 500) {
+      // throw an alert
+      return;
+    }
+    const data = await response.json();
+    // data now is an array of usernames
+    if (data) {
+      console.log(data);
+      setMembers(data);
+    }
+  };
+
   const setModal = (value) => {
     setModalVisible(value);
   };
@@ -43,7 +44,11 @@ const SwipeScreen = () => {
       <View style={styles.swipeScreenContainer}>
         <Banner />
         <MovieDeck modalVisible={modalVisible} changeModalVisible={(value) => setModal(value)} roomMembers={roomMembers} />
-        <MatchBar modalVisible={modalVisible} changeModalVisible={(value) => setModal(value)} />
+        <MatchBar
+          getRoomMembers={() => getRoomMembers()}
+          modalVisible={modalVisible}
+          changeModalVisible={(value) => setModal(value)}
+        />
       </View>
     </SafeAreaView>
   );

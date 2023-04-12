@@ -12,7 +12,6 @@ import JoinRoom from "./JoinRoom";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
 
 const RoomsPage = ({ navigation }) => {
-  console.log("Rooms Page");
   // use context to see whether a user has a username
   const context = useContext(LandingPageContext);
   // state used to keep track of when the user has selected a username

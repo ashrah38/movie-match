@@ -1,7 +1,6 @@
 import IP_ADDRESS from "../../../global";
 
 export const getGroupMatches = async (context) => {
-  console.log("getting matches");
   const roomCode = context.roomCode;
   const requestOptions = {
     method: "GET",
@@ -16,7 +15,6 @@ export const getGroupMatches = async (context) => {
     return;
   }
   const data = await response.json();
-
   let treatedData = [];
   let keyIterator = 1;
   data.forEach((item) => {

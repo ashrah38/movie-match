@@ -2,7 +2,6 @@ const Room = require("../../models/Room");
 const Movies = require("../../models/Movies");
 const User = require("../../models/User");
 const getGroupMatches = async (req, res) => {
-  console.log("Getting group matches");
   const roomCode = req.query.roomCode;
   let matchesList = [];
   const room = await Room.findOne({ roomCode: roomCode });
