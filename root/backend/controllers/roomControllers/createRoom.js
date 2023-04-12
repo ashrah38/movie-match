@@ -19,6 +19,7 @@ const createRoom = (req, res) => {
     roomName: roomName,
     roomCode: roomCode,
     categories: categories,
+    deck: [],
     members: [memberId],
   });
   //creating document in db
@@ -28,7 +29,7 @@ const createRoom = (req, res) => {
       //11000 is for error for duplicate room code
       //rerun createRoom function if duplicate room code detected
       if (err.code === 11000) {
-        createRoom(req, res);
+        // createRoom(req, res);
       } else {
         res.sendStatus(500);
       }

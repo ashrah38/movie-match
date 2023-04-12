@@ -71,7 +71,7 @@ const NewAccountForm = ({ navigation }) => {
         })
         .then((response) => {
           if (response.status == 200) {
-            navigation.navigate("Rooms", { replace: true });
+            navigation.replace("Rooms");
           }
         })
         .catch((error) => {

@@ -1,2 +1,2 @@
-const IP_ADDRESS = "192.168.0.27";
+const IP_ADDRESS = "172.17.119.118";
 export default IP_ADDRESS;

@@ -18,7 +18,8 @@ const getGroupMatches = async (req, res) => {
   });
   Promise.all(matchesPromises)
     .then((matchesList) => {
-      res.send(JSON.stringify(matchesList));
+      const filteredArray = matchesList.filter((item) => item != null);
+      res.send(JSON.stringify(filteredArray));
     })
     .catch((err) => {
       console.log(err);

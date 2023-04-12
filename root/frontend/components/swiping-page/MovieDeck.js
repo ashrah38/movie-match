@@ -1,18 +1,19 @@
 import React, { useState, useRef, useContext } from "react";
-import { View, PanResponder, Animated, TouchableOpacity, Image } from "react-native";
+import { View, PanResponder, Animated, TouchableOpacity, Image, Modal, Text } from "react-native";
 import { Dimensions } from "react-native";
 import { LandingPageContext } from "../landing-page/LandingPageContext";
 import { getDeckOfMovies } from "./server-requests/getDeckOfMovies";
 import { onSwipe } from "./server-requests/onSwipe";
 import { debounce } from "lodash";
 import styles from "../../styles";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_WIDTH = SCREEN_WIDTH * 0.8;
 const CARD_HEIGHT = SCREEN_HEIGHT * 0.5;
 
-const MovieDeck = () => {
+const MovieDeck = ({ roomMembers, modalVisible, changeModalVisible }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = new Animated.ValueXY();
   const opacity = useRef(new Animated.Value(1)).current;
@@ -161,13 +162,13 @@ const MovieDeck = () => {
         } else if (index === currentIndex) {
           return (
             <Animated.View key={item.id} style={[styles.cardStyle, animatedStyle]} {...panResponder.panHandlers}>
-              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
+              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="contain" />
             </Animated.View>
           );
         } else {
           return (
             <Animated.View key={item.id} style={[styles.cardStyle]}>
-              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="cover" />
+              <Image source={{ uri: item.url }} style={styles.deckImageStyle} resizeMode="contain" />
             </Animated.View>
           );
         }
@@ -178,24 +179,51 @@ const MovieDeck = () => {
   return (
     <View style={styles.deckContainer}>
       {renderCards()}
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          changeModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity style={styles.closeIcon} onPress={() => changeModalVisible(!modalVisible)}>
+              <MaterialIcons name="close" size={24} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>List of members</Text>
+            <View style={styles.buttonContainer}>
+              {roomMembers.map((member) => (
+                <Text key={member.key} style={styles.modalMember}>
+                  {member.username}
+                </Text>
+              ))}
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       <View style={{ position: "absolute", width: "100%", bottom: 0 }}>
         <TouchableOpacity onPress={swipeLeft} style={[styles.circleContainerLeft, styles.shadowProp]}>
           <Image
-                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/1828/1828843.png" }}
+            source={{ uri: "https://cdn-icons-png.flaticon.com/512/1828/1828843.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeUp} style={[styles.circleContainerCenter, styles.shadowProp]}>
           <Image
-                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/833/833408.png" }}
+            source={{ uri: "https://cdn-icons-png.flaticon.com/512/833/833408.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={swipeRight} style={[styles.circleContainerRight, styles.shadowProp]}>
           <Image
-                      source={{ uri: "https://cdn-icons-png.flaticon.com/512/5290/5290058.png" }}
+            source={{ uri: "https://cdn-icons-png.flaticon.com/512/5290/5290058.png" }}
             style={{ height: 35, width: 35, resizeMode: "contain" }}
           />
         </TouchableOpacity>

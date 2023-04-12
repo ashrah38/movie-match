@@ -1,18 +1,54 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { SafeAreaView, View } from "react-native";
+import { LandingPageContext } from "../landing-page/LandingPageContext";
 import Banner from "../generic/Banner";
 import Toolbar from "../generic/Toolbar";
 import MatchBar from "./MatchBar";
 import MovieDeck from "./MovieDeck";
 import styles from "../../styles";
+import IP_ADDRESS from "../../global";
 
 const SwipeScreen = () => {
+  console.log("Rooms Page");
+  // use context to obtain the movie deck.
+  const context = useContext(LandingPageContext);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [roomMembers, setMembers] = useState([]);
+
+  const getRoomMembers = async () => {
+    const roomCode = context.roomCode;
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch(`http://${IP_ADDRESS}:4000/getMembers?roomCode=${roomCode}`, requestOptions);
+    if (response.status == 500) {
+      // throw an alert
+      return;
+    }
+    const data = await response.json();
+    // data now is an array of usernames
+    if (data) {
+      console.log(data);
+      setMembers(data);
+    }
+  };
+
+  const setModal = (value) => {
+    setModalVisible(value);
+  };
+
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
       <Toolbar />
       <View style={styles.swipeScreenContainer}>
         <Banner />
-        <MovieDeck />
-        <MatchBar />
+        <MovieDeck modalVisible={modalVisible} changeModalVisible={(value) => setModal(value)} roomMembers={roomMembers} />
+        <MatchBar
+          getRoomMembers={() => getRoomMembers()}
+          modalVisible={modalVisible}
+          changeModalVisible={(value) => setModal(value)}
+        />
       </View>
     </SafeAreaView>
   );

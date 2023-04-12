@@ -24,7 +24,7 @@ const RoomsPage = ({ navigation }) => {
   const [chooseUsernameStyles, onChangeChooseUsernameStyles] = useState([styles.roomWidgets, styles.hideWidget]);
   // state to keep track of the recent rooms widget
   const [recentRooms, onChangeRecentRooms] = useState([]);
-  // if username does not exist, then display the username widget
+  // fetch recent rooms for this user
   useEffect(() => {
     // send an http request to fetch recent rooms
     const getRecentRooms = async () => {
@@ -44,6 +44,11 @@ const RoomsPage = ({ navigation }) => {
         console.log(error);
       }
     };
+    getRecentRooms();
+  }, []);
+
+  // if username does not exist, then display the username widget
+  useEffect(() => {
     if (!context.hasUsername && !hasChosenUsername) {
       onChangeRoomDisplayStyles(styles.hideMainRoomDisplay);
       onChangeChooseUsernameStyles(styles.roomWidgets);
